@@ -9,3 +9,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import excommon as com
 
+dataset = com.load('ex2data1.txt')
+X = np.mat(dataset)[:, 0:2]
+y = np.mat(dataset)[:, 2:3]
+plt.scatter(X[np.where(y==1)[0],0], X[np.where(y==1)[0],1], color='r', marker='+')
+plt.scatter(X[np.where(y==0)[0],0], X[np.where(y==0)[0],1], color='g', marker='o')
+plt.show()
