@@ -27,13 +27,17 @@ def compute_cost(X, y, theta):
 def gradientdescent(X, y, theta, alpha, num_iters):
     m = len(y)
     j_history = np.zeros([num_iters, 1])
-    j = np.zeros([m, 1])
-    lentheta = len(theta)
-    temp = np.zeros([lentheta, 1])
     for i in range(0, num_iters):
+        j = X * theta - y
         theta = theta - alpha * (1/m) * np.sum(np.multiply(j, X))
         j_history[i] = compute_cost(X, y, theta)    
     return theta, j_history
+    
+def feature_normalize(x):
+    mu = np.mean(x, 1)
+    sigma = np.std(x, 1)
+    x = np.divide(x - mu, sigma)
+    return x, mu, sigma
 
 #plot data
 dataset = load('ex1data1.txt')
@@ -77,8 +81,16 @@ X_theta0, Y_theta1 = np.meshgrid(theta0_val, theta1_val)
 muldataset = load('ex1data2.txt')
 mul_x = np.mat(muldataset)[:, 0: 2]
 mul_y = np.mat(muldataset)[:, 2: 3]
-mul_X = np.insert(mul_x, 0, 1, 1)
 theta = np.matrix(np.zeros([3,1]))
-alpha = 0.01;
+alpha = 0.1;
 num_iters = 400;
+
+#Scale features and set them to zero mean
+mul_X, mu, sigma = feature_normalize(mul_x)
+mul_X = np.insert(mul_X, 0, 1, 1)
+
 theta, j_history = gradientdescent(mul_X, mul_y, theta, alpha, num_iters)
+# plt.plot([x for x in range(0, num_iters)], j_history)
+# plt.show()
+mul_y_diff = np.insert(np.divide(mul_x - mu, sigma), 0, 1, 1) * theta - mul_y
+print(mul_y_diff)
