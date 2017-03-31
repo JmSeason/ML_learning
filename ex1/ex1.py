@@ -40,7 +40,7 @@ def feature_normalize(x):
     return x, mu, sigma
 
 #plot data
-dataset = load('ex1data1.txt')
+dataset = com.load('ex1data1.txt')
 # plt.scatter([x[0] for x in dataset], [y[1] for y in dataset], marker = 'x', color='red')
 # plt.xlabel('Population of City in 10,000s')
 # plt.ylabel('Profit in $10,000s')
@@ -78,7 +78,7 @@ X_theta0, Y_theta1 = np.meshgrid(theta0_val, theta1_val)
 # plt.show()
 
 #multi variable
-muldataset = load('ex1data2.txt')
+muldataset = com.load('ex1data2.txt')
 mul_x = np.mat(muldataset)[:, 0: 2]
 mul_y = np.mat(muldataset)[:, 2: 3]
 theta = np.matrix(np.zeros([3,1]))
